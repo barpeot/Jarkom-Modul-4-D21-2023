@@ -52,7 +52,7 @@ Selanjutnya, kita bagi IP per subnet, berikut adalah hasilnnya
 
 Setelah membagikan sesuai dengan subnet, kita assign masing-masing IP ke masing-masing node, pembagiannya adalah sebagai berikut
 
-![IP vlsm](./assets/IP_vlsm.png)
+![IP vlsm](./assets/ip_vlsm.png)
 
 ### CIDR
 
@@ -120,6 +120,8 @@ Dari network ID tersebut dapat dilakukan pembagian IP kepada setiap node pada su
 | A19         | 10.32.8.0    |
 | A20         | 10.32.0.0    |
 | A21         | 10.32.4.0    |
+
+Selanjutnya hal yang perlu dilakukan adalah membuat network ini ke dalam dua tools, yaitu Cisco Packet Tracer dan GNS3.
 
 ### Cisco Packet Tracer
 
