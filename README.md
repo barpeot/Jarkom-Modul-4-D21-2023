@@ -21,5 +21,3 @@ Selanjutnya, kita bagi IP per subnet, berikut adalah hasilnnya
 ![image](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/56bbe30d-2314-46ef-8719-15c0307bfc90)
 
 Setelah membagikan sesuai dengan subnet, kita assign masing-masing IP ke masing-masing node, pembagiannya adalah sebagai berikut
-
-![Uploading image.png…]()
