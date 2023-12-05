@@ -6,6 +6,9 @@ Akbar Putra Asenti P. 5025211004
 Farrela Ranku Mahhisa 5025211129
 
 ## Pembagian IP
+Kami mengggunakan VLSM pada CPT dan CIDR pada GNS3
+
+
 Beriku ini adalah pembagian subnet beserta totalnya
 
 ![image](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/54b6872a-8346-4f6f-b956-845649ec33f0)
@@ -21,3 +24,7 @@ Selanjutnya, kita bagi IP per subnet, berikut adalah hasilnnya
 ![image](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/56bbe30d-2314-46ef-8719-15c0307bfc90)
 
 Setelah membagikan sesuai dengan subnet, kita assign masing-masing IP ke masing-masing node, pembagiannya adalah sebagai berikut
+
+### CIDR
+
+## Testing
