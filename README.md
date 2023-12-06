@@ -54,6 +54,74 @@ Setelah membagikan sesuai dengan subnet, kita assign masing-masing IP ke masing-
 
 ![IP vlsm](./assets/ip_vlsm.png)
 
+Dalam langkah selanjutnya, network VLSM ini akan dibuat di **Cisco Packet Tracer**.
+
+### Cisco Packet Tracer (VLSM)
+
+Berikut adalah hasil topologi network yang dibuat di Cisco Packet Tracer.
+
+![network cpt](./assets/network_cpt.png)
+
+Langkah selanjutnya adalah konfigurasi IP untuk setiap node di topologi, sesuai dengan pembagian IP yang telah dilakukan sebelumnya. Proses ini disebut dengan **Subnetting**
+
+Konfigurasi IP dapat dilakukan dengan membuka salah satu node kemudian masuk ke dalam menu **INTERFACE**, kemudian melakukan memasukkan IP address, Subnet Mask, dan menyalakan port dengan mencentang tombol **Port Status**.
+
+Konfigurasi IP setiap router perlu memperhatikan interface eth yang dipakai di subnet yang mana, sebagai contoh berikut adalah salah satu contoh konfigurasi IP di router Fern pada Fa (FastEthernet) 0/0.
+
+![example cpt](./assets/example_cpt.png)
+
+Fa 0/0 pada Fern perlu disetup sedemikian karena interface ini mengarah ke node Flamme, sehingga dapat membentuk salah satu subnet yang telah ditentukan sebelumnya, yaitu subnet A4.
+
+Untuk node yang merupakan host atau server, perlu ditambahkan default gateway yang mengarah ke interface router yang mengarah ke arah host atau server tersebut. Default gateway dapat ditentukan pada menu **Setting** pada host atau server.
+
+Sebagai contoh, di node LaubHills (397 Hosts), default gateway yang digunakan adalah interface pada Fern Fa 0/1 yang mengarah ke LaubHills. 
+
+### Di LaubHills
+
+![example gateway cpt](./assets/example_gateway_cpt.png)
+
+### Di Fern
+
+![example gateway cpt 2](./assets/example_gateway_cpt_2.png)
+
+### Routing
+
+Proses selanjutnya adalah routing, tujuan dari proses ini adalah untuk "mengenalkan" satu subnet dengan subnet-subnet lainnya. Routing dapat dilakukan dengan cara menambahkan network ID, netmask, dan next hop untuk suatu subnet di dalam menu **Routing > Static**.
+
+Untuk sebuah router yang memiliki host atau server, perlu ditambahkan routing dengan network ID 0.0.0.0 netmask 0.0.0.0 dengan next hop mengarah ke router utama (Aura).
+
+Sebagai contoh, berikut adalah routing yang dilakukan pada router Fern:
+
+![routing fern vlsm](./assets/routing_fern.png)
+
+Setelah setup router Fern, perlu dilakukan setup pada router selanjutnya yang berhubungan dengan Fern, yaitu Flamme. Pada Flamme, setup routing adalah sebagai berikut:
+
+![routing flamme vlsm](./assets/routing_flamme.png)
+
+Pada Flamme, terdapat tiga buah routing yang dilakukan, 0.0.0.0 karena Flamme memiliki host berupa RohrRoad, 10.32.0.0 yang merupakan subnet LaubHills-AppetitRegion-Fern, dan 10.32.24.96 yang merupakan subnet Himmel-SchwerMountains.
+
+Proses routing ini perlu dilanjutkan hingga router utama (Aura) dan perlu dijalankan untuk setiap cabang pada network. Sehingga di Aura terdapat routing untuk setiap subnet kecuali subnet yang bersebelahan dengan Aura (1 Hop), total terdapat 18 subnet yang perlu disimpan di Aura.
+
+![routing aura vlsm](./assets/routing_aura.png)
+
+Untuk next hop perlu disesuaikan dengan topologi, dalam contoh diatas next hop 10.32.24.114 di Aura mengarah ke Frieren (arah kiri), next hop 10.32.24.126 di Aura mengarah ke Denken (arah kanan), dan next hop 10.32.24.150 di Aura mengarah ke Eisen (arah bawah).
+
+### Testing
+
+Setelah subnetting dan routing dijalankan, dapat dilakukan testing di Cisco Packet Tracer dengan menggunakan tool PDU (Keybind P) untuk mengirim pesan dari satu node ke node yang lain.
+
+![testing vlsm](./assets/testingvlsm.png)
+
+Pengetesan yang dilakukan:
+
+-	Sein –> Richter
+-	GranzChannel –> Turk Region
+-	RiegelCanyon –> Aura
+-	Fern –> Linie
+-	RoyalCapital –> LaubHills
+-	Heiter –> Denken
+-	SchwerMountains –> Lugner
+
 ### CIDR
 
 Dalam CIDR langkah yang pertama dilakukan adalah melakukan penggabungan subnet. Penggabungan subnet yang kami lakukan adalah sebagai berikut:
@@ -85,7 +153,7 @@ Dengan rincian sebagai berikut:
 
 ![gabung 6](./assets/gabung_6.png)
 
-Maka akan dihasilkan subnet G1 yang berisi semua subnet A. Selanjutnya perlu dilakukan pembagian Network ID![Alt text](image.png) CIDR dengan menggambar tree berdasarkan penggabungan yang tadi dilakukan, sehingga dihasilkan hasil sebagai berikut:
+Maka akan dihasilkan subnet G1 yang berisi semua subnet A. Selanjutnya perlu dilakukan pembagian Network ID CIDR dengan menggambar tree berdasarkan penggabungan yang tadi dilakukan, sehingga dihasilkan hasil sebagai berikut:
 
 ![tree cidr](./assets/treecidr.png)
 
@@ -121,8 +189,6 @@ Dari network ID tersebut dapat dilakukan pembagian IP kepada setiap node pada su
 | A20         | 10.32.0.0    |
 | A21         | 10.32.4.0    |
 
-Selanjutnya hal yang perlu dilakukan adalah membuat network ini ke dalam dua tools, yaitu Cisco Packet Tracer dan GNS3.
+Selanjutnya hal yang perlu dilakukan adalah membuat network ini ke dalam tool GNS3.
 
-### Cisco Packet Tracer
-
-### GNS3
+### GNS3 (CIDR)
