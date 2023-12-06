@@ -12,7 +12,7 @@ Kami mengggunakan VLSM pada CPT dan CIDR pada GNS3
 Berikut ini adalah pembagian subnet beserta totalnya
 
 ![image](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/54b6872a-8346-4f6f-b956-845649ec33f0)
-### VLSM
+## VLSM
 
 Untuk VLSM karena jumlah total IP yang dibutuhkan sebesar 4255, maka dibutuhkan network dengan netmask dengan length sebesar /19 yang memiliki ukuran maksimal usable IP 8190.
 
@@ -117,7 +117,7 @@ Proses routing ini perlu dilanjutkan hingga router utama (Aura) dan perlu dijala
 
 Untuk next hop perlu disesuaikan dengan topologi, dalam contoh diatas next hop 10.32.24.114 di Aura mengarah ke Frieren (arah kiri), next hop 10.32.24.126 di Aura mengarah ke Denken (arah kanan), dan next hop 10.32.24.150 di Aura mengarah ke Eisen (arah bawah).
 
-### Testing
+### Testing VLSM
 
 Setelah subnetting dan routing dijalankan, dapat dilakukan testing di Cisco Packet Tracer dengan menggunakan tool PDU (Keybind P) untuk mengirim pesan dari satu node ke node yang lain.
 
@@ -133,7 +133,7 @@ Pengetesan yang dilakukan:
 -	Heiter –> Denken (Success)
 -	SchwerMountains –> Lugner (Success)
 
-### CIDR
+## CIDR
 
 Dalam CIDR langkah yang pertama dilakukan adalah melakukan penggabungan subnet. Penggabungan subnet yang kami lakukan adalah sebagai berikut:
 
@@ -274,7 +274,7 @@ Dapat dilihat pada Eisen terdapat tujuh buah routing, 0.0.0.0 mengarah ke Aura, 
 
 Setelah proses subnetting dan routing, langkah selanjutnya adalah Testing:
 
-### Testing
+### Testing CIDR
 
 Testing pada GNS3 dilakukan dengan cara membuka CLI salah satu node dan melakukan ping menuju node salah satu IP milik node lain. Apabila terdapat balasan dari ip tersebut maka subnetting dan routing telah berhasil untuk menghubungkan antar subnet.
 
