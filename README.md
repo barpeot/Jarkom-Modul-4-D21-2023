@@ -6,6 +6,11 @@ Akbar Putra Asenti P. 5025211004
 Farrela Ranku Mahhisa 5025211129
 
 ## Pembagian IP
+
+Sheets informasi IP dan subnet kelompok D21
+https://docs.google.com/spreadsheets/d/1yxOE76tMgBR4ZPQR7WI3Td0DMOAW4rRtTaTkOadb0JY/edit?usp=sharing
+
+
 Kami mengggunakan VLSM pada CPT dan CIDR pada GNS3
 
 
