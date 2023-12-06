@@ -12,6 +12,17 @@ Kami mengggunakan VLSM pada CPT dan CIDR pada GNS3
 Berikut ini adalah pembagian subnet beserta totalnya
 
 ![image](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/54b6872a-8346-4f6f-b956-845649ec33f0)
+### VLSM
+
+Untuk VLSM karena jumlah total IP yang dibutuhkan sebesar 4255, maka dibutuhkan network dengan netmask dengan length sebesar /19 yang memiliki ukuran maksimal usable IP 8190.
+
+
+Pembagian IP yang dilakukan dimulai menggunakan  VLSM dilakukan dengan cara berikut ini
+
+![WhatsApp Image 2023-12-05 at 12 54 28](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/34210e4d-5482-42c2-8e5e-cb2a0510e4dd)
+
+Kita dapatkan pembagian Network ID sebagai berikut
+
 
 | Nama Subnet | Network ID  |
 |  :---:      |     :---:   |
@@ -37,13 +48,7 @@ Berikut ini adalah pembagian subnet beserta totalnya
 | A20         | 10.32.8.0   |
 | A21         | 10.32.22.0  |
 
-### VLSM
 
-Untuk VLSM karena jumlah total IP yang dibutuhkan sebesar 4255, maka dibutuhkan network dengan netmask dengan length sebesar /19 yang memiliki ukuran maksimal usable IP 8190
-
-Pembagian IP yang dilakukan menggunakan  VLSM dilakukan dengan cara berikut ini
-
-![WhatsApp Image 2023-12-05 at 12 54 28](https://github.com/barpeot/Jarkom-Modul-4-D21-2023/assets/114351382/34210e4d-5482-42c2-8e5e-cb2a0510e4dd)
 
 
 Selanjutnya, kita bagi IP per subnet, berikut adalah hasilnnya
