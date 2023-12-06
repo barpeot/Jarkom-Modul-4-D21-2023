@@ -86,7 +86,9 @@ Sebagai contoh, di node LaubHills (397 Hosts), default gateway yang digunakan ad
 
 ### Routing
 
-Proses selanjutnya adalah routing, tujuan dari proses ini adalah untuk "mengenalkan" satu subnet dengan subnet-subnet lainnya. Routing dapat dilakukan dengan cara menambahkan network ID, netmask, dan next hop untuk suatu subnet di dalam menu **Routing > Static**.
+Proses selanjutnya adalah routing, tujuan dari proses ini adalah untuk "mengenalkan" suatu router dengan subnet-subnet yang terhubung dengan router tetangganya. 
+
+Routing dapat dilakukan dengan cara menambahkan network ID, netmask, dan next hop untuk suatu subnet di dalam menu **Routing > Static**.
 
 Untuk sebuah router yang memiliki host atau server, perlu ditambahkan routing dengan network ID 0.0.0.0 netmask 0.0.0.0 dengan next hop mengarah ke router utama (Aura).
 
@@ -99,6 +101,10 @@ Setelah setup router Fern, perlu dilakukan setup pada router selanjutnya yang be
 ![routing flamme vlsm](./assets/routing_flamme.png)
 
 Pada Flamme, terdapat tiga buah routing yang dilakukan, 0.0.0.0 karena Flamme memiliki host berupa RohrRoad, 10.32.0.0 yang merupakan subnet LaubHills-AppetitRegion-Fern, dan 10.32.24.96 yang merupakan subnet Himmel-SchwerMountains.
+
+![routing frieren](./assets/routing_frieren.png)
+
+Pada Frieren perlu enam routing, yaitu semua routing pada Flamme, 0.0.0.0 karena Frieren memiliki host (LakeKorridor) ditambah dua subnet baru, yaitu subnet Flamme-Fern dan Flamme-Himmel.
 
 Proses routing ini perlu dilanjutkan hingga router utama (Aura) dan perlu dijalankan untuk setiap cabang pada network. Sehingga di Aura terdapat routing untuk setiap subnet kecuali subnet yang bersebelahan dengan Aura (1 Hop), total terdapat 18 subnet yang perlu disimpan di Aura.
 
@@ -114,13 +120,13 @@ Setelah subnetting dan routing dijalankan, dapat dilakukan testing di Cisco Pack
 
 Pengetesan yang dilakukan:
 
--	Sein –> Richter
--	GranzChannel –> Turk Region
--	RiegelCanyon –> Aura
--	Fern –> Linie
--	RoyalCapital –> LaubHills
--	Heiter –> Denken
--	SchwerMountains –> Lugner
+-	Sein –> Richter (Success)
+-	GranzChannel –> Turk Region (Success)
+-	RiegelCanyon –> Aura (Success)
+-	Fern –> Linie (Success)
+-	RoyalCapital –> LaubHills (Success)
+-	Heiter –> Denken (Success)
+-	SchwerMountains –> Lugner (Success)
 
 ### CIDR
 
@@ -192,3 +198,109 @@ Dari network ID tersebut dapat dilakukan pembagian IP kepada setiap node pada su
 Selanjutnya hal yang perlu dilakukan adalah membuat network ini ke dalam tool GNS3.
 
 ### GNS3 (CIDR)
+
+Berikut adalah struktur topologi yang dibuat pada GNS3.
+
+![network gns 1](./assets/network_gns1.png)
+
+![network gns 2](./assets/network_gns2.png)
+
+Proses yang perlu dilakukan selanjutnya adalah subnetting. 
+
+Prosesnya sama dengan proses subnetting di Cisco Packet Tracer, perlu memberikan informasi berupa alamat IP, subnet mask, dan default gateway untuk node berupa host atau server.
+
+Subnetting dalam GNS3 dapat dilakukan dengan **klik kanan suatu node > configuration > Edit network configuration**. 
+
+Sebagai contoh berikut adalah konfigurasi subnetting pada router Aura:
+
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.32.144.33
+	netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+	address 10.32.32.1
+	netmask 255.255.255.252
+
+auto eth3
+iface eth3 inet static
+	address 10.32.193.1
+	netmask 255.255.255.252
+```
+
+Untuk router Aura, interface eth0 mengarah ke NAT1 yang menggunakan dhcp, kemudian untuk eth1 mengarah ke subnet Frieren-Aura dimana IP Aura bernilai 10.32.144.33, eth2 mengarah ke subnet Aura-Eisen dimana IP Aura bernilai 10.32.32.1, dan eth3 mengarah ke subnet Aura-Denken dimana IP Aura bernilai 10.32.193.1.
+
+Sedangkan berikut adalah contoh subnetting untuk node yang berupa server (Stark):
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.32.16.2
+	netmask 255.255.255.252
+	gateway 10.32.16.1
+```
+
+Karena Stark merupakan host server, perlu ditambahkan default gateway, dalam contoh ini default gateway dari Stark mengarah ke subnet Eisen-Stark, yaitu eth4 dari Eisen yang bernilai 10.32.16.1.
+
+Setelah subnetting dilakukan, langkah selanjutnya adalah routing. Pada GNS3, routing dilakukan dengan menjalankan command pada command line berupa.
+
+```
+route add -net <NID subnet> netmask <netmask> gw <IP gateway>
+```
+
+Proses ini sama dengan proses routing di Cisco Packet Tracer. Pada suatu router akan "dikenalkan" subnet-subnet yang terhubung dengan router tetangganya.
+
+Untuk menghindari menjalankan script berulang-ulang, setting routing dapat disimpan di direktori ~/.bashrc
+
+Berikut adalah contoh routing di router Lugner:
+
+![cidr lugner](./assets/cidr_lugner.png)
+
+Gateway disini memiliki tugas yang sama dengan next hop pada Cisco Packet Tracer, disini gateway pada Lugner mengarah ke eth3 pada Eisen. Contoh selanjutnya adalah routing pada Eisen:
+
+![cidr eisen](./assets/cidr_eisen.png)
+
+Dapat dilihat pada Eisen terdapat tujuh buah routing, 0.0.0.0 mengarah ke Aura, 4 selanjutnya mengarah ke arah bawah Eisen (RiegelCanyon, BredtRegion, GranzChannel, Lawine-Linie), dan 2 routing terakhir mengarah ke arah kanan Eisen (TurkRegion dan GrobeForest).
+
+Setelah proses subnetting dan routing, langkah selanjutnya adalah Testing:
+
+### Testing
+
+Testing pada GNS3 dilakukan dengan cara membuka CLI salah satu node dan melakukan ping menuju node salah satu IP milik node lain. Apabila terdapat balasan dari ip tersebut maka subnetting dan routing telah berhasil untuk menghubungkan antar subnet.
+
+```
+ping <ip node lain> -c 5
+```
+
+### Test #1: Sein -> Richter (Success)
+
+![Alt text](./assets/image.png)
+
+### Test #2: GranzChannel -> TurkRegion (Success)
+
+![Alt text](./assets/image-1.png)
+
+### Test #3: RiegelCanyon -> Aura (Success)
+
+![Alt text](./assets/image-2.png)
+
+### Test #4: Fern -> Linie (Success)
+
+![Alt text](./assets/image-3.png)
+
+### Test #5: RoyalCapital -> LaubHills (Success)
+
+![Alt text](./assets/image-4.png)
+
+### Test #5: Heiter -> Denken (Success)
+
+![Alt text](./assets/image-5.png)
+
+### Test #6: SchwerMountains -> Lugner (Success)
+
+![Alt text](./assets/image-6.png)
